@@ -12,6 +12,40 @@ SNOWMAN_GRAPHIC = [
     '-----------'
 ]
 
+def snowman(snowman_word):
+    """Complete the snowman function
+    replace "pass" below with your own code
+    It should print 'Congratulations, you win!'
+    If the player wins and, 
+    'Sorry, you lose! The word was {snowman_word}' if the player loses
+    """
+    wrong_guesses_count = 0
+    wrong_guesses_list = []
+    correct_letter_guess_statuses = build_letter_status_dict(snowman_word)
+    
+
+    while wrong_guesses_count < SNOWMAN_MAX_WRONG_GUESSES:
+        print_snowman_graphic(wrong_guesses_count)
+        print_word_progress_string(snowman_word, correct_letter_guess_statuses)
+        user_guess = get_letter_from_user(correct_letter_guess_statuses, wrong_guesses_list)
+
+        if user_guess in correct_letter_guess_statuses:
+            print ("correct guess")
+            correct_letter_guess_statuses[user_guess] = True
+    
+        else:
+            print("wrong guess")
+            wrong_guesses_list.append(user_guess)
+            wrong_guesses_count += 1
+
+        if is_word_guessed(snowman_word, correct_letter_guess_statuses):
+            print_word_progress_string(snowman_word, correct_letter_guess_statuses)
+            print("Congratulations, you win!")
+            return
+        
+    print_snowman_graphic(wrong_guesses_count)
+    print(f"Sorry, you lose! The word was {snowman_word}")
+    return
 
 def print_snowman_graphic(wrong_guesses_count):
     """This function prints out the appropriate snowman image 
@@ -108,38 +142,7 @@ def is_word_guessed(snowman_word, correct_letter_guess_statuses):
             return False
     return True
 
-def snowman(snowman_word):
-    """Complete the snowman function
-    replace "pass" below with your own code
-    It should print 'Congratulations, you win!'
-    If the player wins and, 
-    'Sorry, you lose! The word was {snowman_word}' if the player loses
-    """
-    wrong_guesses_count = 0
-    wrong_guesses_list = []
-    correct_letter_guess_statuses = build_letter_status_dict(snowman_word)
-    
 
-    while wrong_guesses_count < 7:
-        print_snowman_graphic(wrong_guesses_count)
-        print_word_progress_string(snowman_word, correct_letter_guess_statuses)
-        user_guess = get_letter_from_user(correct_letter_guess_statuses, wrong_guesses_list)
-
-        if user_guess in snowman_word:
-            correct_letter_guess_statuses[user_guess] = True
-    
-        else:
-            wrong_guesses_count += 1
-            wrong_guesses_list.append(user_guess)
-
-        if is_word_guessed(snowman_word, correct_letter_guess_statuses):
-            print("Congratulations, you win!")
-            return
-        
-        elif wrong_guesses_count >= 7:
-            print_snowman_graphic(wrong_guesses_count)
-            print(f"Sorry, you lose! The word was {snowman_word}")
-            return
 
 
 
